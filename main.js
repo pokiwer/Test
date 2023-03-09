@@ -8,7 +8,7 @@ Array.prototype.myMap = function(cb) {
     return output;
 }
 
-
+var i = 0
 const numbers = [1, 2, 3];
 
 console.log(numbers.myMap(function (number) {

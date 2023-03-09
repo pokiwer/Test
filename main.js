@@ -17,7 +17,7 @@ Array.prototype.myEvery = function(cb) {
 
 
 
-const numbers = [1, 3, 3, 5];
+const numbers = [1, 3, 3, 5, 7, 10];
 
 console.log(numbers.myEvery(function (number) {
     return number % 2 !== 0;

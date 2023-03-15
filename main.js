@@ -1,8 +1,13 @@
-var btn = document.querySelectorAll('button')
-for(var i = 0; i < btn.length; i++)
+var hello = document.querySelector('div');
+hello.onclick = (e) =>
 {
-    btn[i].onclick = function(e)
-{
-    e.target.style.color = '#fff'
+    console.log('Hello!');
 }
+
+var bye = document.querySelector('button');
+bye.onclick = (e) => 
+{
+    //Ngăn nổi bọt
+    e.stopPropagation();
+    console.log('Good Bye!');
 }

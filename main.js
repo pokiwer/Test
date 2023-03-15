@@ -1,10 +1,8 @@
-function render(html) {
-    var add = document.querySelector('ul')
-    add.innerHTML = html
+var btn = document.querySelectorAll('button')
+for(var i = 0; i < btn.length; i++)
+{
+    btn[i].onclick = function(e)
+{
+    e.target.style.color = '#fff'
 }
-
-render(`
-    <li>Khóa học HTML</li>
-    <li>Khóa học JS</li>
-    <li>Khóa học PHP</li>
-`)
+}

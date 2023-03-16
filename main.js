@@ -1,19 +1,23 @@
-var promise1 = new Promise(function(resolve)
-{
-    setTimeout(() => {
-        resolve([1]);
-    }, 1000);
-})
-
-var promise2 = new Promise(function(resolve)
-{
-    setTimeout(() => {
-        resolve([2,3])
-    }, 2000);
-})
-
-Promise.all([promise1,promise2])
-    .then(function([result1, result2])
+var post = 'https://jsonplaceholder.typicode.com/users'
+fetch(post)
+    .then(function(response)
     {
-        console.log(result1.concat(result2))
+        return response.json();
+    })
+    .then(function(data)
+    {
+        var html = data.map(function(data)
+        {
+            return `<li>
+                <h2>${data.name}</h2>
+                <p>${data.email}</p>
+                <p>${data.address.street}</p>
+            </li>`;
+        })
+        html = html.join('');
+        document.querySelector('#block').innerHTML = html;
+    })
+    .catch(function()
+    {
+        console.log('Error!')
     })

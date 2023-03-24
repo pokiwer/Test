@@ -35,6 +35,7 @@ function render(student)
                 ${data.lastName}
             </p>
             <button onclick='deleteStudent(${data.id})'>Delete</button>
+            <button onclick='updateStudent(${data.id})'>Update</button>
         </li>`
     })
     html = html.join('');
@@ -80,6 +81,7 @@ function createData(data,callback)
         .then(callback)
 }
 
+
 //hàm xóa sinh viên
 function deleteStudent(id)
 {
@@ -102,5 +104,60 @@ function deleteStudent(id)
         {
             studentItem.remove();
         }
+        })
+}
+
+//Hàm lấy thông tin sinh viên cần sửa
+function updateStudent(id)
+{
+    var updateBtn = document.querySelector('#create');
+    updateBtn.textContent = 'Save'
+    var lastName = document.querySelector('.student-' + id + '>p').textContent;
+    var firstName = document.querySelector('.student-' + id + '>h2').textContent;
+    lastName = lastName.trim();
+    document.querySelector('input[name="firstName"]').value = firstName;
+    document.querySelector('input[name="lastName"]').value = lastName;
+    
+    updateBtn.onclick = function()
+    {
+        var firstName = document.querySelector('input[name="firstName"]').value;
+        var lastName = document.querySelector('input[name="lastName"]').value;
+        
+        var form = {
+            firstName : firstName,
+            lastName: lastName
+        }
+        updateData(form,id,function()
+        {
+            getStudents(render)
+        })
+        updateBtn.textContent = 'Create'
+    }
+}
+
+
+//Hàm cập nhật thông tin sinh viên
+function updateData(form,id,callback)
+{
+    var option =
+    {
+        method: 'patch',
+        body: JSON.stringify(form),
+        headers: {
+            'content-Type':'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Z-Key',
+            'Access-Control-Allow-Methods': 'GET, PATCH, POST, PUT, DELETE, OPTIONS'
+        }
+    }
+    fetch(post + '/' + id, option)
+        .then(function(reponse)
+        {
+            return reponse.json();
+        })
+        .then(callback)
+        .catch(function()
+        {
+            console.log("Lỗi")
         })
 }

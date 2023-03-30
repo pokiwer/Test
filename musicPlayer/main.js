@@ -12,11 +12,14 @@ const next = $('.btn-next')
 const prev = $('.btn-prev')
 const randomBtn = $('.btn-random')
 const repeatBtn = $('.btn-repeat')
+const selectSong = $('.song.active')
+
 const app =
 {
     currentIndex: 0,
     isPlaying: false,
     isRandom: false,
+    isRepeat: false,
     songs:
         [
             {
@@ -63,9 +66,9 @@ const app =
             }
         ],
     render: function () {
-        var htmls = this.songs.map(song => {
+        var htmls = this.songs.map((song, index) => {
             return `
-            <div class="song">
+            <div class="song ${index === app.currentIndex ? 'active' : ''}" data-index = "${index}">
             <div class="thumb" style="background-image: url(${song.image})">
             </div>
             <div class="body">
@@ -129,7 +132,14 @@ const app =
         //Khi bài hát hết
         audio.onended = function()
         {
-            next.click();
+            if(app.isRepeat == true)
+            {
+                btnPlay.click();
+            }
+            else{
+                next.click();
+            }
+            
         }
 
         //Seek bài hát
@@ -159,6 +169,7 @@ const app =
                 app.nextSong();
             }
             audio.play();
+            app.render();
         }
 
         //Chuyển bài hát trước đó
@@ -173,6 +184,7 @@ const app =
                 app.prevSong();
             }
             audio.play();
+            app.render();
         }
 
         //Bât tắt phát ngẫu nhiên bài hát
@@ -180,6 +192,29 @@ const app =
         {
             app.isRandom = !app.isRandom;
             randomBtn.classList.toggle('active',app.isRandom)
+        }
+
+        //Bài hát được tua lại
+        repeatBtn.onclick = function()
+        {
+            app.isRepeat = !app.isRepeat;
+            this.classList.toggle('active',app.isRepeat);
+        }
+ 
+        //Bài hát được chọn
+        playList.onclick = function(e)
+        {
+            const selectIndex = e.target.closest('.song:not(.active)');
+            if(selectIndex || e.target.closest('.option'))
+            {
+                if(selectIndex)
+                {
+                    app.currentIndex = Number(selectIndex.dataset.index);
+                    app.loadCurrentSong();
+                    app.render();
+                    audio.play();
+                }
+            }
         }
 
     },

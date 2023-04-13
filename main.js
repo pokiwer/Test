@@ -144,10 +144,7 @@ function updateData(form,id,callback)
         method: 'patch',
         body: JSON.stringify(form),
         headers: {
-            'content-Type':'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Z-Key',
-            'Access-Control-Allow-Methods': 'GET, PATCH, POST, PUT, DELETE, OPTIONS'
+            'content-Type':'application/json'
         }
     }
     fetch(post + '/' + id, option)

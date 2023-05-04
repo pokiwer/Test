@@ -113,5 +113,44 @@ console.log(person.getName()) // Output = Đặng
 //getName được gọi từ global
 console.log(person2()); // Output = Long
 
+//Để gọi từ hàm person2 mà vẫn ràng buộc với đối tượng person => dùng Bind
+//Ở đây phương thức getName bị ràng buộc với đối tượng person => this = person
+//Bind sẽ tạo ra một hàm mới nhưng vẫn nhận đối số như hàm ban đầu
+const person3 = person.getName.bind(person);
+console.log(person3())//Output Đặng
 
+const teacher =
+{
+    firstName : 'Minh',
+    lastName : 'Thu'
+}
+
+const me =
+{
+    firstName: 'Long',
+    lastName: 'Đặng',
+    showFullName()
+    {
+        console.log(`${this.firstName} ${this.lastName}`)
+    }
+}
+
+const he =
+{
+    firstName: 'Long',
+    lastName: 'Đặng',
+    showFullName(first,last)
+    {
+        console.log(`${first}: ${this.firstName} ${last}: ${this.lastName}`)
+    }
+}
+//Hàm call kết hợp vừa gọi hàm vừa dùng hàm bind để ràng buộc this
+//Sự khác nhau là hàm bind sẽ tạo ra một hàm mới còn hàm call sẽ sử dùng hàm của đối tượng gọi nó
+//Đối tượng gọi nó là me nhưng vẫn tạo được ràng buộc với teach và sử dụng chính hàm của me
+me.showFullName.call(teacher)//output Minh Thu
+
+
+he.showFullName.call(teacher,'Họ','Tên') //output Họ: Minh Tên: Thu
+//Hàm apply hoạt động tương tự hàm call nhưng các đối số truyền dưới dạng mảng
+he.showFullName.apply(teacher,['Họ','Tên']) //output Họ: Minh Tên: Thu
 

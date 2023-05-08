@@ -9,6 +9,8 @@ const h1 = React.createElement('h1',{
     className: 'heading'
 },'Ngọc')
 
+const arr = []
+
 const postItem = React.createElement(
     'div',
     {
@@ -17,7 +19,10 @@ const postItem = React.createElement(
     React.createElement(
         'h2',
         {
-            title: 'Học React tại F8'
+            title: 'Học React tại F8',
+            style:{
+                color: '#0033ff85'
+            }
         },
         'Học lập trình web cơ bản'
     ),
@@ -27,28 +32,39 @@ const postItem = React.createElement(
         'Học ReactJS từ cơ bản đến nâng cao'
     )
 )
+
+arr.push(postItem)
 //Get element root
 const rootElement = document.getElementById('root');
 
 const exercise = React.createElement(
-    'div',
-    {},
+    React.Fragment,
+    null,
     React.createElement(
         'h1',
-        { title: 'Hello', className: 'heading' },
+        { title: 'Hello', 
+        className: 'heading',
+        style: {
+            color: 'red'
+        }
+        },
         'Hello Guys!'
     ),
     React.createElement(
         'ul',
         {},
-        React.createElement('li', {}, 'JavaScript'),
-        React.createElement('li', {}, 'ReactJS')
+        React.createElement('li', null, 'JavaScript'),
+        React.createElement('li', null,  'ReactJS')
     )
 )
+arr.push(exercise)
 //Cách để render nhiều reactDOM element vào cùng một container
-//Tạo createElement bao ngoài reactDom element
-const container = React.createElement('div',{},postItem,exercise)
+//Tạo fragment bao ngoài reactDom element
+const container = React.createElement(React.Fragment,null,arr)
 //Dùng reactDom để render UI
-//ReactDom.render nhận 3 đối số: reactDom element, Container và callback
-ReactDOM.render(container,rootElement)
+const root = ReactDOM.createRoot(rootElement)
+root.render(container)
+console.log(arr)
+
+
 
